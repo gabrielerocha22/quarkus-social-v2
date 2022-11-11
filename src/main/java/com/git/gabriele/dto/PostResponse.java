@@ -10,10 +10,10 @@ public class PostResponse {
 	private LocalDateTime dateTime;
 	
 	
-	public PostResponse(String text, LocalDateTime dateTime) {
-		this.text = text;
-		this.dateTime = dateTime;
-	}
+//	public PostResponse(String text, LocalDateTime dateTime) {
+//		this.text = text;
+//		this.dateTime = dateTime;
+//	}
 	
 	public String getText() {
 		this.text = text;
@@ -29,9 +29,9 @@ public class PostResponse {
 		this.dateTime = dateTime;
 	}
 	
-	public static PostResponse fromEntity (Post post) {s
+	public static PostResponse fromEntity (Post post) {
 		var response = new PostResponse();
-        response.setText(post.getText());s
+        response.setText(post.getText());
         response.setDateTime(post.getDataTime());
         return response;
         }

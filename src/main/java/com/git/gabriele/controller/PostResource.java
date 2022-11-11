@@ -1,6 +1,5 @@
 package com.git.gabriele.controller;
 
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -19,10 +18,10 @@ import com.git.gabriele.dto.CreatePostRequest;
 import com.git.gabriele.dto.PostResponse;
 import com.git.gabriele.model.Post;
 import com.git.gabriele.model.User;
+import com.git.gabriele.repositoriy.FollowerRepository;
 import com.git.gabriele.repositoriy.PostRepository;
 import com.git.gabriele.repositoriy.UserRepository;
 
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Sort;
 
 @Path("/users/{userID}/posts")
@@ -32,11 +31,14 @@ public class PostResource {
 
 	private UserRepository userRepository;
 	private PostRepository repository;
+	private FollowerRepository followerRepository;
 
 	@Inject
-	public PostResource(UserRepository userRepository, PostRepository repository) {
+	public PostResource(UserRepository userRepository, PostRepository repository,
+			FollowerRepository followerRepository) {
 		this.userRepository = userRepository;
 		this.repository = repository;
+		this.followerRepository = followerRepository;
 	}
 
 	@POST
@@ -46,7 +48,6 @@ public class PostResource {
 		if (user == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
-
 		Post post = new Post();
 		post.setText(request.getText());
 		post.setUser(user);
@@ -56,39 +57,36 @@ public class PostResource {
 
 	}
 
+	@GET
+	public Response listPosts(@PathParam("userId") Long userId, @HeaderParam("followerId") Long followerId) {
 
-    @GET
-    public Response listPosts(@PathParam("userId") Long userId, @HeaderParam("followerId") Long followerId){
-        User user = userRepository.findById(userId);
-        if(user == null){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+		User user = userRepository.findById(userId);
+		if (user == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
 
-        if(followerId == null){
-            return Response.status(Response.Status.BAD_REQUEST).
-                    entity("You forgot the header followerId").build();
-        }
+		if (followerId == null) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("You forgot the header followerId").build();
+		}
 
-        User follower = userRepository.findById(followerId);
-        if(follower == null){
-            return Response.status(Response.Status.BAD_REQUEST).
-                    entity("inexistent followerId").build();
-        }
+		User follower = userRepository.findById(followerId);
 
-//        boolean follows = followerRepository.follows(follower, user);
-//        if(!follows){
-//            return Response.status(Response.Status.FORBIDDEN).
-//                    entity("You can't see these posts").build();
-//        }
+		if (follower == null) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Inexistent followerId").build();
+		}
 
-        var query = repository.
-                find("user", Sort.by("dateTime", Sort.Direction.Descending), user);
-        var list = query.list();
+		boolean follows = followerRepository.follows(follower, user);
+		if (!follows) {
+			return Response.status(Response.Status.FORBIDDEN).entity("You can't see these posts").build();
+		}
 
-        var postResponseList = list.stream().map(post -> PostResponse.fromEntity(post)).
-                collect(Collectors.toList());
+		var query = repository.find("user", Sort.by("dateTime", Sort.Direction.Descending), user);
+		var list = query.list();
 
-        return Response.ok(postResponseList).build();
-    }
+		var postResponseList = list.stream()
+//                .map(post -> PostResponse.fromEntity(post))
+				.map(PostResponse::fromEntity).collect(Collectors.toList());
 
+		return Response.ok(postResponseList).build();
+	}
 }
