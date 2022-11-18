@@ -1,15 +1,12 @@
 package com.git.gabriele.controller;
 
-<<<<<<< HEAD
 import java.util.stream.Collectors;
-
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-=======
 import java.util.List;
 
 import javax.inject.Inject;
->>>>>>> 6f609a0 (add exceptions)
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
