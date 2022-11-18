@@ -22,16 +22,10 @@ public class FollowerResponse {
 		this.id = id;
 		this.name = name;
 	}
-<<<<<<< HEAD
-	
-	public FollowerResponse() {
-		
-	}
-	
-=======
+
 	public FollowerResponse() {	
 	}
->>>>>>> 6f609a0 (add exceptions)
+	
 	public FollowerResponse(Follower follower) {
 		this(follower.getId(), follower.getFollower().getName());
 	}
