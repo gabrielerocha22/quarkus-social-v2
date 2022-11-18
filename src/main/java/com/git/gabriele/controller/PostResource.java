@@ -21,27 +21,20 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.git.gabriele.dto.CreatePostRequest;
-import com.git.gabriele.dto.PostResponse;
-<<<<<<< HEAD
+
 import com.git.gabriele.model.Post;
 import com.git.gabriele.model.User;
 import com.git.gabriele.repositoriy.FollowerRepository;
 import com.git.gabriele.repositoriy.PostRepository;
 import com.git.gabriele.repositoriy.UserRepository;
-
 import io.quarkus.panache.common.Sort;
-
-@Path("/users/{userID}/posts")
-=======
 import com.git.gabriele.service.PostService;
 
 @Path("/users/{userId}/posts")
->>>>>>> 6f609a0 (add exceptions)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class PostResource {
 
-<<<<<<< HEAD
 	private UserRepository userRepository;
 	private PostRepository repository;
 	private FollowerRepository followerRepository;
@@ -64,7 +57,6 @@ public class PostResource {
 		Post post = new Post();
 		post.setText(request.getText());
 		post.setUser(user);
-		// post.setDataTime(LocalDateTime.now());
 		repository.persist(post);
 		return Response.status(Response.Status.CREATED).build();
 
@@ -97,25 +89,8 @@ public class PostResource {
 		var list = query.list();
 
 		var postResponseList = list.stream()
-//                .map(post -> PostResponse.fromEntity(post))
 				.map(PostResponse::fromEntity).collect(Collectors.toList());
 
 		return Response.ok(postResponseList).build();
 	}
-=======
-    @Inject
-    PostService postService;
-
-    @POST
-    public Response savePost(@PathParam("userId") Long userId, CreatePostRequest request){
-        postService.save(userId, request);
-        return Response.status(Response.Status.CREATED).build();
-    }
-
-    @GET
-    public Response listPosts(@PathParam("userId") Long userId, @HeaderParam("followerId") Long followerId){
-        List<PostResponse> postResponseList = postService.listAllPosts(userId, followerId);
-        return Response.ok(postResponseList).build();
-    }
->>>>>>> 6f609a0 (add exceptions)
 }
