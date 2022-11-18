@@ -3,7 +3,7 @@
 https://www.udemy.com/course/aprenda-quarkus-e-desenvolva-apis-restful-poderosas-em-java/
 
 # Projeto Quarkus Social Api's criadas:
- ➡️ USER
- ➡️ POSTS
- ➡️ FOLLOWERS
+ - ➡️ USER
+ - ➡️ POSTS
+ - ➡️ FOLLOWERS
  
