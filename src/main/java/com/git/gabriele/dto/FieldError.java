@@ -9,10 +9,7 @@ public class FieldError {
 		this.field = field;
 		this.message = message;
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> 6f609a0 (add exceptions)
+
 	public String getField() {
 		return field;
 	}
@@ -25,10 +22,5 @@ public class FieldError {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-<<<<<<< HEAD
-	
-	
 
-=======
->>>>>>> 6f609a0 (add exceptions)
 }
