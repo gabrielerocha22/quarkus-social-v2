@@ -1,9 +1,13 @@
 package com.git.gabriele.controller;
 
+<<<<<<< HEAD
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+=======
+import javax.inject.Inject;
+>>>>>>> 6f609a0 (add exceptions)
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.git.gabriele.dto.FollowerRequest;
+<<<<<<< HEAD
 import com.git.gabriele.dto.FollowerResponse;
 import com.git.gabriele.dto.FollowersPerUserResponse;
 import com.git.gabriele.model.Follower;
@@ -23,10 +28,17 @@ import com.git.gabriele.repositoriy.FollowerRepository;
 import com.git.gabriele.repositoriy.UserRepository;
 
 @Path("/user/{userId}/followers")
+=======
+import com.git.gabriele.dto.FollowersPerUserResponse;
+import com.git.gabriele.service.FollowerService;
+
+@Path("/users/{userId}/followers")
+>>>>>>> 6f609a0 (add exceptions)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class FollowerResource {
 
+<<<<<<< HEAD
 	private FollowerRepository repository;
 	private UserRepository userRepository;
 
@@ -91,3 +103,28 @@ public class FollowerResource {
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 }
+=======
+    @Inject
+    FollowerService followerService;
+
+    @PUT
+    public Response followUser(@PathParam("userId") Long userId, FollowerRequest request){
+
+        followerService.follow(userId, request);
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @GET
+    public Response listFollowers(@PathParam("userId") Long userId){
+
+        FollowersPerUserResponse responseObject = followerService.listAll(userId);
+        return Response.ok(responseObject).build();
+    }
+
+    @DELETE
+    public Response unfollowUser(@PathParam("userId") Long userId, @QueryParam("followerId") Long followerId){
+        followerService.unfollow(userId, followerId);
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+}
+>>>>>>> 6f609a0 (add exceptions)

@@ -1,9 +1,15 @@
 package com.git.gabriele.controller;
 
+<<<<<<< HEAD
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+=======
+import java.util.List;
+
+import javax.inject.Inject;
+>>>>>>> 6f609a0 (add exceptions)
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -16,6 +22,7 @@ import javax.ws.rs.core.Response;
 
 import com.git.gabriele.dto.CreatePostRequest;
 import com.git.gabriele.dto.PostResponse;
+<<<<<<< HEAD
 import com.git.gabriele.model.Post;
 import com.git.gabriele.model.User;
 import com.git.gabriele.repositoriy.FollowerRepository;
@@ -25,10 +32,16 @@ import com.git.gabriele.repositoriy.UserRepository;
 import io.quarkus.panache.common.Sort;
 
 @Path("/users/{userID}/posts")
+=======
+import com.git.gabriele.service.PostService;
+
+@Path("/users/{userId}/posts")
+>>>>>>> 6f609a0 (add exceptions)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class PostResource {
 
+<<<<<<< HEAD
 	private UserRepository userRepository;
 	private PostRepository repository;
 	private FollowerRepository followerRepository;
@@ -89,4 +102,20 @@ public class PostResource {
 
 		return Response.ok(postResponseList).build();
 	}
+=======
+    @Inject
+    PostService postService;
+
+    @POST
+    public Response savePost(@PathParam("userId") Long userId, CreatePostRequest request){
+        postService.save(userId, request);
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+    @GET
+    public Response listPosts(@PathParam("userId") Long userId, @HeaderParam("followerId") Long followerId){
+        List<PostResponse> postResponseList = postService.listAllPosts(userId, followerId);
+        return Response.ok(postResponseList).build();
+    }
+>>>>>>> 6f609a0 (add exceptions)
 }

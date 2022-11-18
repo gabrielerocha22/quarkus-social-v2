@@ -12,7 +12,10 @@ public class CreateUserRequest {
 	@NotNull 
 	private Integer age;
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 6f609a0 (add exceptions)
 	public CreateUserRequest(String name, Integer age) {
 		super();
 		this.name = name;
@@ -30,7 +33,10 @@ public class CreateUserRequest {
 	public void setAge(Integer age) {
 		this.age = age;
 	}
+<<<<<<< HEAD
 	
 	
 
+=======
+>>>>>>> 6f609a0 (add exceptions)
 }

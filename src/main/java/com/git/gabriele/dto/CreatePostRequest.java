@@ -14,7 +14,10 @@ public class CreatePostRequest {
 	public CreatePostRequest(String text) {
 		this.text = text;
 	}
+<<<<<<< HEAD
 
 	
 	
+=======
+>>>>>>> 6f609a0 (add exceptions)
 }

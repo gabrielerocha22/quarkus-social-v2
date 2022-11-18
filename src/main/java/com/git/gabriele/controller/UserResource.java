@@ -1,5 +1,6 @@
 package com.git.gabriele.controller;
 
+<<<<<<< HEAD
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -23,12 +24,29 @@ import com.git.gabriele.model.User;
 import com.git.gabriele.repositoriy.UserRepository;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
+=======
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+
+
+import com.git.gabriele.dto.CreateUserRequest;
+import com.git.gabriele.model.User;
+import com.git.gabriele.service.UserService;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
+>>>>>>> 6f609a0 (add exceptions)
 
 @Path("/users")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
+<<<<<<< HEAD
 	private UserRepository repository;
 	
 	private Validator validator;
@@ -92,4 +110,35 @@ public class UserResource {
 
 	}
 
+=======
+    @Inject
+    UserService userService;
+
+    @POST
+    public Response createUser(CreateUserRequest userRequest){
+
+        User user = userService.saveUser(userRequest);
+        return Response.status(Response.Status.CREATED.getStatusCode()).entity(user).build();
+    }
+
+    @GET
+    public Response listAllUsers(){
+        List<User> users = userService.findAllUsers();
+        return Response.ok(users).build();
+    }
+
+    @DELETE
+    @Path("{id}")
+    public Response deleteUser(@PathParam("id") Long id){
+        userService.delete(id);
+        return Response.noContent().build();
+    }
+
+    @PUT
+    @Path("{id}")
+    public Response updateUser(@PathParam("id") Long id, CreateUserRequest userData){
+        userService.update(id, userData);
+        return Response.noContent().build();
+    }
+>>>>>>> 6f609a0 (add exceptions)
 }

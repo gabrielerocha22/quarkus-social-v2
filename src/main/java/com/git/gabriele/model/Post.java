@@ -80,10 +80,16 @@ public class Post {
 		return Objects.equals(dataTime, other.dataTime) && Objects.equals(id, other.id)
 				&& Objects.equals(text, other.text) && Objects.equals(user, other.user);
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6f609a0 (add exceptions)
 	@PrePersist
 	public void prePersist() {
 		setDataTime(LocalDateTime.now());
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6f609a0 (add exceptions)
 }
